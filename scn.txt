@@ -1,0 +1,102 @@
+== files ==
+
+* .scn files
+* .txt files (language files: english.txt, german.txt ...)
+
+== basic SCN format ==
+
+* all values are LSB
+* sections:
+	* u16 section type
+	* u16 magic (34 33 LSB, 0x3334)
+	* u32 offset (absolute) of next block
+	* data
+
+== section types ==
+                                                               DW1   DW2
+* 0x0001: DIALOGUE                                              x     x
+* 0x0002: SCNFILE                                               x     x
+* 0x0003: BLOCK_LISTS                                           x
+* 0x0004: BLOCKS                                                x
+* 0x0005: PALETTES                                              x     x
+* 0x0006: GRAPHICS_LIST                                         x     x
+* 0x0007: (offsets in 0x0006)                                   x     x
+* 0x0008:                                                       x     x
+* 0x000A:                                                       x     x
+* 0x000B:                                                       x     x
+* 0x000C: (rare)                                                x     x
+* 0x000D:                                                       x     x
+* 0x000E: DIRECTORY?                                            x     x
+* 0x000F:                                                             x
+* 0x0012: (objects.scn)                                               x
+* 0x0013: (objects.scn)                                               x
+* 0x0019: GRAPHICS_DW2                                                x
+* 0x001B:                                                             x
+* 0x001C:                                                             x
+* 0x001D:                                                             x
+* 0x001E:                                                             x
+
+== 32 bit addresses ==
+
+DW1:
+* 9 bit file id (=> "index" order)   [ addr & 0xFF800000 >> 23 ]
+* 23 bit offset                      [ addr & 0x007FFFFF       ]
+
+DW2:
+* 7 bit file id (=> "index" order)   [ addr & 0xFE000000 >> 25 ]
+* 25 bit offset                      [ addr & 0x01FFFFFF       ]
+
+== type 0x0001: DIALOGUE ==
+
+* multiple blocks (lines in dialogue):
+	* u8 length
+	* text
+
+== type 0x0002: SCNFILE ==
+
+* at beginning of every .scn file, no payload
+* not present in .txt files
+
+== type 0x0003: BLOCK_LISTS (DW1) ==
+
+* referenced by offset from section 0x0006
+* list of block indexes in section 0x0004 (u16 index), e.g.
+  320x200 image: (320 / 4) * (200 / 4) = 80 * 50 = 4000 blocks
+* some blocks have bit 0x8000 set, from objects.scn?
+
+== type 0x0004: BLOCKS (DW1) ==
+
+* 4x4 pixel graphics (16 bytes)
+* referenced by index from section 0x0003
+
+== type 0x0005: PALETTES ==
+
+* size: 1024 * x
+* 1 palette: 256 *
+	* u8 r
+	* u8 g
+	* u8 b
+	* u8 unused
+
+== type 0x0008: SCENE SETUP/ANIMATIONS? ==
+
+== type 0x000A: SCRIPTS? ==
+
+(80e79c06 010b4e1f) 00019bfa (324e0203): play midi file @midi.dat:0x00019bfa
+(810ea006 010b4e22) 000236e4 (324e0203)
+
+00 
+01 xyxyxyxy (midi.dat offset)
+02 
+03
+04
+
+06 xyxyxyxy local offset to section 0x0008
+07
+
+41 xy (?)
+4e xy
+
+81
+8a
+

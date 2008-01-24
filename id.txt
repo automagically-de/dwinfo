@@ -1,0 +1,32 @@
+DW1:
+
+book.scn        01 0
+finale.scn      01 8
+act4.scn        05 0
+title.scn       05 8
+psygnosi.scn	07 0
+act1.scn        0a 0
+act2.scn        0a 8
+act3.scn        0b 0
+camera.scn      0f 0
+donkcart.scn	11 0
+ramkin.scn      15 8
+street.scn      16 0
+shades.scn      16 8
+square.scn      17 0
+square2.scn		17 8
+square3.scn     18 0
+space.scn       3f 0
+spire.scn       46 0
+sheep.scn       48 8
+
+DW2:
+
+dw2.scn         00   00000000
+objects.scn     02   00000010
+ashkente.scn    04   00000100
+movies.scn      06   00000110
+(extra.scn)     08   00001000
+title.scn       0a   00001010
+
+to be continued...

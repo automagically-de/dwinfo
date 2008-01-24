@@ -1,0 +1,5 @@
+== Index ==
+
+* records of:
+	* 12 bytes filename (DOS 8.3 format, padded with '\0')
+	* (DW1: 8 | DW2: 12) bytes additional data
